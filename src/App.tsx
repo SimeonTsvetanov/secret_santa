@@ -283,7 +283,9 @@ function App() {
     </div>
     ${budget ? `<div class="budget">💰 Budget: <strong>${budget}€</strong></div>` : ''}
     <div class="secret">🤫 <strong>Remember:</strong> Keep it a secret!</div>
-    <div class="footer">Sent via Secret Santa App</div>
+    <div class="footer">
+      Sent via <a href="https://simeontsvetanov.github.io/secret_santa/" style="color: #999; text-decoration: underline;">Secret Santa App</a>
+    </div>
   </div>
 </body>
 </html>`
