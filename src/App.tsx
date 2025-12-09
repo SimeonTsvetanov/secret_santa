@@ -121,6 +121,25 @@ function App() {
     setDeferredPrompt(null)
   }
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Secret Santa 🎁',
+      text: 'Organize your Secret Santa gift exchange easily! No servers, no sign-ups.',
+      url: 'https://simeontsvetanov.github.io/secret_santa/'
+    }
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData)
+      } catch (err) {
+        console.error('Share failed:', err)
+      }
+    } else {
+      navigator.clipboard.writeText(shareData.url)
+      alert('Link copied to clipboard! 📋')
+    }
+  }
+
   const addParticipant = () => {
     const trimmedName = newName.trim()
     const trimmedEmail = newEmail.trim()
@@ -336,6 +355,17 @@ function App() {
             <span className="text-lg font-semibold tracking-tight">Secret Santa</span>
           </div>
           <div className="flex items-center gap-1">
+            <button
+              onClick={handleShare}
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              title="Share App"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                <polyline points="16 6 12 2 8 6" />
+                <line x1="12" y1="2" x2="12" y2="15" />
+              </svg>
+            </button>
             <button
               onClick={() => setShowInfoModal(true)}
               className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
