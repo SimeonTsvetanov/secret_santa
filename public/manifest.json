@@ -1,6 +1,8 @@
 {
   "name": "Secret Santa",
   "short_name": "Santa",
+  "id": "/secret_santa/",
+  "scope": "/secret_santa/",
   "description": "Secret Santa gift exchange app - draw names and spread holiday cheer!",
   "start_url": "./",
   "display": "standalone",
