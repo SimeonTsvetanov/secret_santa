@@ -1,4 +1,4 @@
-const CACHE_NAME = 'secret-santa-v1';
+const CACHE_NAME = 'secret-santa-v2';
 const urlsToCache = [
   './',
   './index.html',

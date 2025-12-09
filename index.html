@@ -16,7 +16,38 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js', { scope: './' });
+          navigator.serviceWorker.register('./sw.js', { scope: './' }).then(registration => {
+            // Check for updates periodically
+            setInterval(() => {
+              registration.update();
+            }, 60 * 60 * 1000); // Check every hour
+            
+            // Handle updates
+            registration.onupdatefound = () => {
+              const installingWorker = registration.installing;
+              if (installingWorker == null) return;
+              
+              installingWorker.onstatechange = () => {
+                if (installingWorker.state === 'installed') {
+                  if (navigator.serviceWorker.controller) {
+                    console.log('New content is available; please refresh.');
+                    // Optional: Show a "Update available" toast instead of auto-reload
+                    // For now, we rely on the controllerchange event below
+                  } else {
+                    console.log('Content is cached for offline use.');
+                  }
+                }
+              };
+            };
+          });
+
+          // Refresh functionality
+          let refreshing;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (refreshing) return;
+            window.location.reload();
+            refreshing = true;
+          });
         });
       }
     </script>
