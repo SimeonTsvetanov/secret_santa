@@ -71,7 +71,7 @@ function App() {
   const [budget, setBudget] = useState('')
   const [results, setResults] = useState<Map<string, Participant> | null>(null)
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
-  const [showInstallBanner, setShowInstallBanner] = useState(false)
+
   const [showDeleteModal, setShowDeleteModal] = useState<{ type: 'single' | 'all', id?: string, name?: string } | null>(null)
   const [editingParticipant, setEditingParticipant] = useState<Participant | null>(null)
   const [editName, setEditName] = useState('')
@@ -101,7 +101,6 @@ function App() {
     const handler = (e: Event) => {
       e.preventDefault()
       setDeferredPrompt(e as BeforeInstallPromptEvent)
-      setShowInstallBanner(true)
     }
     window.addEventListener('beforeinstallprompt', handler)
     return () => window.removeEventListener('beforeinstallprompt', handler)
@@ -151,8 +150,7 @@ function App() {
   const handleInstall = async () => {
     if (!deferredPrompt) return
     deferredPrompt.prompt()
-    const { outcome } = await deferredPrompt.userChoice
-    if (outcome === 'accepted') setShowInstallBanner(false)
+    await deferredPrompt.userChoice
     setDeferredPrompt(null)
   }
 
