@@ -1,7 +1,7 @@
 {
   "name": "Secret Santa",
   "short_name": "Santa",
-  "id": "/secret_santa/",
+  "id": "simeon-secret-santa-pwa-v1",
   "scope": "/secret_santa/",
   "description": "Secret Santa gift exchange app - draw names and spread holiday cheer!",
   "start_url": "./",
