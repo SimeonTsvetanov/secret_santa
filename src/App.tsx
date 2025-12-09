@@ -32,7 +32,9 @@ const FOLLOWERS_DATA: Participant[] = [
 const STORAGE_KEYS = {
   participants: 'secret-santa-participants',
   mode: 'secret-santa-mode',
+  budget: 'secret-santa-budget',
 }
+
 
 const isValidEmail = (email: string): boolean => {
   if (!email) return false
@@ -68,7 +70,9 @@ function App() {
   const [newName, setNewName] = useState('')
   const [newEmail, setNewEmail] = useState('')
   const [emailError, setEmailError] = useState('')
-  const [budget, setBudget] = useState('')
+  const [budget, setBudget] = useState(() => {
+    return localStorage.getItem(STORAGE_KEYS.budget) || ''
+  })
   const [results, setResults] = useState<Map<string, Participant> | null>(null)
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
 
@@ -96,6 +100,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.mode, appMode)
   }, [appMode])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.budget, budget)
+  }, [budget])
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -229,6 +237,7 @@ function App() {
       setParticipants(participants.filter(p => p.id !== showDeleteModal.id))
     } else {
       setParticipants([])
+      setBudget('')
     }
     setResults(null)
     setShowDeleteModal(null)
