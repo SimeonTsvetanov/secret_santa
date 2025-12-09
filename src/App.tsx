@@ -113,6 +113,41 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Sync status bar color with theme
+  useEffect(() => {
+    const updateThemeColor = () => {
+      const isDark = document.documentElement.classList.contains('dark')
+      // Find existing meta or create new
+      let meta = document.querySelector('meta[name="theme-color"]')
+      
+      // If we have multiple with media queries (from index.html), we might want to consolidate 
+      // or just ensure we have one that takes precedence.
+      // Simple strategy: Update the first one found or creating one without media query to override.
+      if (!meta) {
+        meta = document.createElement('meta')
+        meta.setAttribute('name', 'theme-color')
+        document.head.appendChild(meta)
+      }
+      
+      meta.setAttribute('content', isDark ? '#0a0a0f' : '#ffffff')
+      // Clearing media ensures this applies always based on APP state
+      meta.removeAttribute('media')
+      
+      // Cleanup other potential conflicting tags if any existed initially
+      const allMetas = document.querySelectorAll('meta[name="theme-color"]')
+      allMetas.forEach(m => {
+        if (m !== meta) m.remove()
+      })
+    }
+
+    // Run initially and observe changes
+    updateThemeColor()
+    const observer = new MutationObserver(updateThemeColor)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+
+    return () => observer.disconnect()
+  }, [])
+
   const handleInstall = async () => {
     if (!deferredPrompt) return
     deferredPrompt.prompt()

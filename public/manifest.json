@@ -5,7 +5,7 @@
   "scope": "/secret_santa/",
   "description": "Secret Santa gift exchange app - draw names and spread holiday cheer!",
   "start_url": "./",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#0a0a0f",
   "theme_color": "#dc2626",
   "orientation": "portrait-primary",
