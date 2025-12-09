@@ -367,20 +367,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
-      {/* Install Banner */}
-      {showInstallBanner && (
-        <div className="bg-foreground text-background px-4 py-3 flex items-center justify-between">
-          <span className="text-sm font-medium">Install Secret Santa</span>
-          <div className="flex gap-3 items-center">
-            <button onClick={handleInstall} className="text-sm font-semibold hover:opacity-70">
-              Install
-            </button>
-            <button onClick={() => setShowInstallBanner(false)} className="opacity-60 hover:opacity-100">
-              ✕
-            </button>
-          </div>
-        </div>
-      )}
+
 
       {/* Header */}
       <header className={`sticky top-0 z-40 bg-background/80 backdrop-blur-xl transition-shadow ${isScrolled ? 'shadow-md' : ''}`}>
@@ -390,6 +377,19 @@ function App() {
             <span className="text-lg font-semibold tracking-tight">Secret Santa</span>
           </div>
           <div className="flex items-center gap-1">
+            {deferredPrompt && (
+              <button
+                onClick={handleInstall}
+                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                title="Install App"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </button>
+            )}
             <button
               onClick={handleShare}
               className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
